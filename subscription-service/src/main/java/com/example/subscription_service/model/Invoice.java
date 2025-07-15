@@ -8,6 +8,7 @@ import org.springframework.data.annotation.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
+import java.util.List;
 
 
 @Document(collection = "invoices")
@@ -23,8 +24,9 @@ public class Invoice {
     private String subscriptionId;
     @NotNull
     private double amount;
+
     @NotNull
-    private double tax;
+    private List<Tax> taxes;
     @NotNull
     private String status;
 
