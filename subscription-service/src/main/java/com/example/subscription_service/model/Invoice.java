@@ -1,6 +1,5 @@
 package com.example.subscription_service.model;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,29 +9,33 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
 
-@Document(collection = "tenants")
+
+@Document(collection = "invoices")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Tenant {
+public class Invoice {
+
     @Id
     private String id;
 
     @NotNull
-    private String name;
-
+    private String subscriptionId;
     @NotNull
-    @Email
-    private String email;
+    private double amount;
+    @NotNull
+    private double tax;
+    @NotNull
+    private String status;
 
     @CreatedDate
-    private Instant createdAt;
-
-    @LastModifiedBy
-    private String modifiedBy;
+    private Instant createDate;
     @CreatedBy
     private String createdBy;
+    @LastModifiedBy
+    private String modifiedBy;
     @LastModifiedDate
     private  Instant ModifiedAt;
+
 
 }

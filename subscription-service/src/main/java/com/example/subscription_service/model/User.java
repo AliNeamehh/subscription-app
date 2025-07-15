@@ -5,34 +5,38 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
 
-@Document(collection = "tenants")
+
+@Document(collection = "users")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Tenant {
+public class User {
+
     @Id
     private String id;
 
     @NotNull
-    private String name;
+    private String tenantId;
 
     @NotNull
     @Email
     private String email;
 
+
+    @NotNull
+    private String name;
+
+    @NotNull
+    private String role;
+
     @CreatedDate
     private Instant createdAt;
 
-    @LastModifiedBy
-    private String modifiedBy;
-    @CreatedBy
-    private String createdBy;
-    @LastModifiedDate
-    private  Instant ModifiedAt;
 
 }
