@@ -25,7 +25,7 @@ public class PlanController {
 
 
     @PostMapping
-    @Operation(summary = "Create a new patient")
+    @Operation(summary = "Create a new plan")
     public ResponseEntity<PlanResponseDto> createPatient(@Validated
                                                              @RequestBody PlanRequestDto planRequestDto) {
         PlanResponseDto createdPlan = planService.createPlan(planRequestDto);
