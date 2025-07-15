@@ -13,7 +13,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Tag extends Auditable {
-
     @Id
     private String id;
 
@@ -21,7 +20,5 @@ public class Tag extends Auditable {
     private String name;
 
     private String description;
-    @NotNull
-    private String appId;
 
 }
