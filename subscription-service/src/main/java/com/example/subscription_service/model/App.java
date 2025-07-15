@@ -7,12 +7,14 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 
 @Document(collection = "apps")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class App {
+public class App extends Auditable {
     @Id
     private String id;
 
@@ -20,5 +22,7 @@ public class App {
     private String name;
 
     private String description;
+
+    private List<String> planIds;
 
 }

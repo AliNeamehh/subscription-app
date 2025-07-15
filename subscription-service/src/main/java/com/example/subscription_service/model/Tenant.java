@@ -5,16 +5,14 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.*;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.time.Instant;
 
 @Document(collection = "tenants")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Tenant {
+public class Tenant extends Auditable {
     @Id
     private String id;
 
@@ -24,15 +22,5 @@ public class Tenant {
     @NotNull
     @Email
     private String email;
-
-    @CreatedDate
-    private Instant createdAt;
-
-    @LastModifiedBy
-    private String modifiedBy;
-    @CreatedBy
-    private String createdBy;
-    @LastModifiedDate
-    private  Instant modifiedAt;
 
 }

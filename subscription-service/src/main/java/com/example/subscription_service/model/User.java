@@ -1,5 +1,6 @@
 package com.example.subscription_service.model;
 
+import com.example.subscription_service.model.enums.UserRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -16,7 +17,7 @@ import java.time.Instant;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class User extends Auditable {
 
     @Id
     private String id;
@@ -33,10 +34,6 @@ public class User {
     private String name;
 
     @NotNull
-    private String role;
-
-    @CreatedDate
-    private Instant createdAt;
-
+    private UserRole role;
 
 }

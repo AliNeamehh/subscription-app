@@ -8,11 +8,13 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Document(collection = "plans")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Plan {
+public class Plan extends Auditable {
 
     @Id
     private String id;
@@ -23,7 +25,7 @@ public class Plan {
     private String description;
 
     @NotNull
-    private  double price;
+    private double price;
 
     @NotNull
     private String billingCycle;
@@ -33,6 +35,8 @@ public class Plan {
 
     @NotNull
     private String basePlanId;
+
+    private List<String> tagIds;
 
 
 }

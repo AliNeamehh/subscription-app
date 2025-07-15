@@ -1,5 +1,6 @@
 package com.example.subscription_service.model;
 
+import com.example.subscription_service.model.enums.SubscriptionStatus;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +15,7 @@ import java.time.Instant;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Subscription {
+public class Subscription extends Auditable {
 
     @Id
     private String id;
@@ -28,11 +29,8 @@ public class Subscription {
     @NotNull
     private Instant endDate;
     @NotNull
-    private String status; //trail or active or cancel
+    private SubscriptionStatus status;
     @NotNull
     private boolean isAutoRenew;
-
-    @CreatedDate
-    private Instant createdAt;
 
 }
