@@ -20,5 +20,5 @@ public class AppPlan {
     @NotNull
     private String appId;
     @NotNull
-    private String groupId;
+    private String planId;
 }

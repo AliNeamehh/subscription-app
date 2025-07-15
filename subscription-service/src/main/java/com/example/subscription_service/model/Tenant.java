@@ -33,6 +33,6 @@ public class Tenant {
     @CreatedBy
     private String createdBy;
     @LastModifiedDate
-    private  Instant ModifiedAt;
+    private  Instant modifiedAt;
 
 }
