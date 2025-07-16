@@ -10,10 +10,7 @@ import com.example.subscription_service.repository.PlanRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +19,18 @@ public class PlanService implements IPlanService {
     private final PlanRepository planRepository;
 
     private final PlanMapper planMapper;
+
+
+    public List<PlanResponseDto> getPlans(){
+
+        List<Plan> plans= planRepository.findAll();
+
+        return plans.stream().map(planMapper::toDto).toList();
+
+    }
+
+
+
 
     public PlanResponseDto createPlan(PlanRequestDto planRequestDto) {
         Plan plan = planRepository.save(planMapper.toModel(planRequestDto));
@@ -59,6 +68,28 @@ public class PlanService implements IPlanService {
 
         planRepository.save(basePlan);
     }
+
+    public PlanResponseDto updatePlan(String planId, PlanRequestDto planRequestDto) {
+
+        Plan plan = planRepository.findById(planId).orElseThrow(() -> new PlanNotFoundException("Plan not found"));
+
+        plan.setName(planRequestDto.getName());
+        plan.setDescription(planRequestDto.getDescription());
+        plan.setPrice(planRequestDto.getPrice());
+        plan.setBasePlanId(planRequestDto.getBasePlanId());
+        plan.setBillingCycle(planRequestDto.getBillingCycle());
+        plan.setTagIds(planRequestDto.getTagIds());
+        plan.setTrialDays(planRequestDto.getTrialDays());
+
+        planRepository.save(plan);
+
+        return null;
+    }
+
+    public void deletePlan(String planId) {
+        planRepository.deleteById(planId);
+    }
+
 
 
 }

@@ -1,6 +1,4 @@
 package com.example.subscription_service.controller;
-
-
 import com.example.subscription_service.dto.SubscribeRequestDto;
 import com.example.subscription_service.dto.SubscribeResponseDto;
 import com.example.subscription_service.service.ISubscriptionService;
