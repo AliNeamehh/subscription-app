@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -36,16 +37,20 @@ public class PlanService implements IPlanService {
 
 
     public void inheritPlan(String basePlanId, String inheritedPlanId) {
-        Plan basePlan = planRepository.getPlansById(basePlanId);
-        if (basePlan == null) {
+
+        Optional<Plan> optionalBasePlan = planRepository.findById(basePlanId);
+        Optional<Plan> optionalInheritPlan = planRepository.findById(inheritedPlanId);
+
+        if (optionalBasePlan.isEmpty()) {
             throw new PlanNotFoundException("Base plan not found");
         }
 
-        Plan inheritedPlan = planRepository.getPlansById(inheritedPlanId);
-        if (inheritedPlan == null) {
+        if (optionalInheritPlan.isEmpty()) {
             throw new PlanNotFoundException("Inherited plan not found");
         }
 
+        Plan basePlan = optionalBasePlan.get();
+        Plan inheritedPlan = optionalInheritPlan.get();
 
         Set<String> mergedTagIds = new HashSet<>(basePlan.getTagIds());
         mergedTagIds.addAll(inheritedPlan.getTagIds());
