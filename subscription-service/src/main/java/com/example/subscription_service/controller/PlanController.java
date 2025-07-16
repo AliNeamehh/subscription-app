@@ -2,6 +2,7 @@ package com.example.subscription_service.controller;
 
 import com.example.subscription_service.dto.PlanRequestDto;
 import com.example.subscription_service.dto.PlanResponseDto;
+import com.example.subscription_service.service.IPlanService;
 import com.example.subscription_service.service.PlanService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,14 +23,14 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Plan Management", description = "APIs for managing plans")
 public class PlanController {
 
-    private final PlanService planService;
+    private final IPlanService iplanService;
 
 
     @PostMapping
     @Operation(summary = "Create a new plan")
     public ResponseEntity<PlanResponseDto> createPatient(@Validated
                                                              @RequestBody PlanRequestDto planRequestDto) {
-        PlanResponseDto createdPlan = planService.createPlan(planRequestDto);
+        PlanResponseDto createdPlan = iplanService.createPlan(planRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPlan);
     }
 
