@@ -6,16 +6,13 @@ import com.example.subscription_service.service.IPlanService;
 import com.example.subscription_service.service.PlanService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/plans")
@@ -24,7 +21,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class PlanController {
 
     private final IPlanService iplanService;
+    private final PlanService planService;
 
+    @GetMapping
+    @Operation(summary = "Get all plans")
+    public ResponseEntity<Page<PlanResponseDto>> getAllPlans(@RequestParam(defaultValue = "0") int page,
+                                                             @RequestParam(defaultValue = "10") int size ) {
+        Page<PlanResponseDto> planPage=iplanService.getPlans(PageRequest.of(page, size));
+        return ResponseEntity.ok().body(planPage);
+    }
 
     @PostMapping
     @Operation(summary = "Create a new plan")
@@ -33,6 +38,29 @@ public class PlanController {
         PlanResponseDto createdPlan = iplanService.createPlan(planRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPlan);
     }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "update an existing plan")
+    public ResponseEntity<PlanResponseDto> updatePlan(@PathVariable String id, @Validated @RequestBody PlanRequestDto planRequestDto) {
+        PlanResponseDto updatedPlan=iplanService.updatePlan(id, planRequestDto);
+        return ResponseEntity.ok().body(updatedPlan);
+
+    }
+
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete a plan")
+    public ResponseEntity<Void> deletePlan(@PathVariable String id) {
+
+        iplanService.deletePlan(id);
+
+        return ResponseEntity.noContent().build();
+    }
+
+
+
+
+
 
 
 }
