@@ -28,7 +28,20 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
+    @ExceptionHandler(NameAlreadyExistsException.class)
+    public ResponseEntity<Map<String, String>> handleEmailAlreadyExists(NameAlreadyExistsException ex) {
+        log.warn("Name is already exists " ,ex.getMessage());
+        Map<String, String> error = new HashMap<>();
+        error.put("error", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
 
-
+    @ExceptionHandler(TagNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleEmailAlreadyExists(TagNotFoundException ex) {
+        log.warn("Tag  is not Found  " ,ex.getMessage());
+        Map<String, String> error = new HashMap<>();
+        error.put("error", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
 
 }

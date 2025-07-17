@@ -50,7 +50,7 @@ public class PlanController {
 
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Delte a plan")
+    @Operation(summary = "Delete a plan")
     public ResponseEntity<Void> deletePlan(@PathVariable String id) {
 
         iplanService.deletePlan(id);
