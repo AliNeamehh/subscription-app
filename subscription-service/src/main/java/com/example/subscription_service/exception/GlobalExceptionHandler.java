@@ -12,17 +12,11 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionHandler {
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
-    @ExceptionHandler(PlanNotFoundException.class)
-    public ResponseEntity<Map<String, String>> handleEmailAlreadyExists(PlanNotFoundException ex) {
-        log.warn("Plan is not Found  " ,ex.getMessage());
-        Map<String, String> error = new HashMap<>();
-        error.put("error", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
-    }
 
-    @ExceptionHandler( TenantNotFoundException.class)
-    public ResponseEntity<Map<String, String>> handleEmailAlreadyExists(TenantNotFoundException ex) {
-        log.warn("Tenant is not Found  " ,ex.getMessage());
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleEmailAlreadyExists(NotFoundException ex) {
+        log.warn("Not Found Exception" ,ex.getMessage());
         Map<String, String> error = new HashMap<>();
         error.put("error", ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
@@ -30,18 +24,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NameAlreadyExistsException.class)
     public ResponseEntity<Map<String, String>> handleEmailAlreadyExists(NameAlreadyExistsException ex) {
-        log.warn("Name is already exists " ,ex.getMessage());
+        log.warn("Name is already exists" ,ex.getMessage());
         Map<String, String> error = new HashMap<>();
         error.put("error", ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
-    @ExceptionHandler(TagNotFoundException.class)
-    public ResponseEntity<Map<String, String>> handleEmailAlreadyExists(TagNotFoundException ex) {
-        log.warn("Tag  is not Found  " ,ex.getMessage());
-        Map<String, String> error = new HashMap<>();
-        error.put("error", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
-    }
+
 
 }

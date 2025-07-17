@@ -2,8 +2,7 @@ package com.example.subscription_service.service;
 
 import com.example.subscription_service.dto.SubscribeRequestDto;
 import com.example.subscription_service.dto.SubscribeResponseDto;
-import com.example.subscription_service.exception.PlanNotFoundException;
-import com.example.subscription_service.exception.TenantNotFoundException;
+import com.example.subscription_service.exception.NotFoundException;
 import com.example.subscription_service.mapper.SubscriptionMapper;
 import com.example.subscription_service.model.Plan;
 import com.example.subscription_service.model.Subscription;
@@ -33,10 +32,10 @@ public class SubscriptionService implements ISubscriptionService {
         Optional<Plan> optionalPlan = planRepository.findById(subscribeRequestDto.getPlanId());
 
         if (optionalTenant.isEmpty()) {
-            throw new TenantNotFoundException("Tenant is Not Found");
+            throw new NotFoundException("Tenant is Not Found");
         }
         if (optionalPlan.isEmpty()) {
-            throw new PlanNotFoundException("Plan is Not Found");
+            throw new NotFoundException("Plan is Not Found");
         }
         Subscription subscription = subscriptionRepository.save(subscriptionMapper.toModel(subscribeRequestDto));
         return subscriptionMapper.toResponseDto(subscription);

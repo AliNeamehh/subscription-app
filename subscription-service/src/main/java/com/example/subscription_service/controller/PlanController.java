@@ -6,15 +6,13 @@ import com.example.subscription_service.service.IPlanService;
 import com.example.subscription_service.service.PlanService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
 
 @RestController
 @RequestMapping("/plans")
@@ -27,9 +25,10 @@ public class PlanController {
 
     @GetMapping
     @Operation(summary = "Get all plans")
-    public ResponseEntity<List<PlanResponseDto>> getAllPlans() {
-        List<PlanResponseDto> plans=iplanService.getPlans();
-        return ResponseEntity.ok().body(plans);
+    public ResponseEntity<Page<PlanResponseDto>> getAllPlans(@RequestParam(defaultValue = "0") int page,
+                                                             @RequestParam(defaultValue = "10") int size ) {
+        Page<PlanResponseDto> planPage=iplanService.getPlans(PageRequest.of(page, size));
+        return ResponseEntity.ok().body(planPage);
     }
 
     @PostMapping

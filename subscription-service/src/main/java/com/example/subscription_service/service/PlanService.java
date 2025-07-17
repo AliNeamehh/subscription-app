@@ -3,11 +3,14 @@ package com.example.subscription_service.service;
 
 import com.example.subscription_service.dto.PlanRequestDto;
 import com.example.subscription_service.dto.PlanResponseDto;
-import com.example.subscription_service.exception.PlanNotFoundException;
+import com.example.subscription_service.exception.NotFoundException;
 import com.example.subscription_service.mapper.PlanMapper;
 import com.example.subscription_service.model.Plan;
 import com.example.subscription_service.repository.PlanRepository;
+import jakarta.annotation.security.PermitAll;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -21,11 +24,9 @@ public class PlanService implements IPlanService {
     private final PlanMapper planMapper;
 
 
-    public List<PlanResponseDto> getPlans(){
-
-        List<Plan> plans= planRepository.findAll();
-
-        return plans.stream().map(planMapper::toDto).toList();
+    public Page<PlanResponseDto> getPlans(Pageable pageable) {
+        Page<Plan> tagPage = planRepository.findAll(pageable);
+       return tagPage.map(planMapper::toDto);
 
     }
 
@@ -39,12 +40,12 @@ public class PlanService implements IPlanService {
 
         if (plan.getBasePlanId() != null && !plan.getBasePlanId().isEmpty()) {
             inheritPlan(plan.getId(), plan.getBasePlanId());
-            plan = planRepository.findById(plan.getId()).orElseThrow(() -> new PlanNotFoundException("Plan not found after inheritance"));
+            plan = planRepository.findById(plan.getId()).orElseThrow(() -> new NotFoundException("Plan not found after inheritance"));
         }
 
         if(!planRepository.existsById(plan.getBasePlanId())) {
 
-            throw new PlanNotFoundException("BasePlan not found ");
+            throw new NotFoundException("BasePlan not found ");
         }
 
         
@@ -60,11 +61,11 @@ public class PlanService implements IPlanService {
         Optional<Plan> optionalInheritPlan = planRepository.findById(inheritedPlanId);
 
         if (optionalBasePlan.isEmpty()) {
-            throw new PlanNotFoundException("Base plan not found");
+            throw new NotFoundException("Base plan not found");
         }
 
         if (optionalInheritPlan.isEmpty()) {
-            throw new PlanNotFoundException("Inherited plan not found");
+            throw new NotFoundException("Inherited plan not found");
         }
 
         Plan basePlan = optionalBasePlan.get();
@@ -80,19 +81,12 @@ public class PlanService implements IPlanService {
 
     public PlanResponseDto updatePlan(String planId, PlanRequestDto planRequestDto) {
 
-        Plan plan = planRepository.findById(planId).orElseThrow(() -> new PlanNotFoundException("Plan not found"));
+        Plan plan = planRepository.findById(planId).orElseThrow(() -> new NotFoundException("Plan not found"));
+        Plan updatedPlan = planMapper.toModel(planRequestDto);
+        updatedPlan.setId(planId);
+        planRepository.save(updatedPlan);
+        return planMapper.toDto(updatedPlan);
 
-        plan.setName(planRequestDto.getName());
-        plan.setDescription(planRequestDto.getDescription());
-        plan.setPrice(planRequestDto.getPrice());
-        plan.setBasePlanId(planRequestDto.getBasePlanId());
-        plan.setBillingCycle(planRequestDto.getBillingCycle());
-        plan.setTagIds(planRequestDto.getTagIds());
-        plan.setTrialDays(planRequestDto.getTrialDays());
-
-        planRepository.save(plan);
-
-        return null;
     }
 
     public void deletePlan(String planId) {
