@@ -5,6 +5,9 @@ import com.example.subscription_service.service.ITagService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -22,9 +25,10 @@ public class TagController {
 
     @GetMapping
     @Operation(summary = "Get all tags")
-    public ResponseEntity<List<TagResponseDto>> getAllTags() {
-        List<TagResponseDto> tags=iTagService.getTags();
-        return ResponseEntity.ok(tags);
+    public ResponseEntity<Page<TagResponseDto>> getTags( @RequestParam(defaultValue = "0") int page,
+                                                         @RequestParam(defaultValue = "10") int size  ) {
+        Page<TagResponseDto> tagPage = iTagService.getTags(PageRequest.of(page, size));
+        return ResponseEntity.ok(tagPage);
     }
 
 

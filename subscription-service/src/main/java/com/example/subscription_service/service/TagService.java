@@ -9,6 +9,8 @@ import com.example.subscription_service.mapper.TagMapper;
 import com.example.subscription_service.model.Tag;
 import com.example.subscription_service.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,11 +24,11 @@ public class TagService implements ITagService {
 
     private final TagMapper tagMapper;
 
-    public List<TagResponseDto> getTags() {
+    public Page<TagResponseDto> getTags(Pageable pageable) {
 
-        List<Tag> tags = tagRepository.findAll();
+        Page<Tag> tagPage = tagRepository.findAll(pageable);
 
-        return tags.stream().map(tagMapper::toResponseDto).toList();
+        return tagPage.map(tagMapper::toResponseDto);
 
     }
 
