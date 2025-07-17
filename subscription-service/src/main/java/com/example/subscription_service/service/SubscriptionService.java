@@ -1,5 +1,4 @@
 package com.example.subscription_service.service;
-
 import com.example.subscription_service.dto.SubscribeRequestDto;
 import com.example.subscription_service.dto.SubscribeResponseDto;
 import com.example.subscription_service.exception.NotFoundException;
@@ -12,7 +11,6 @@ import com.example.subscription_service.repository.SubscriptionRepository;
 import com.example.subscription_service.repository.TenantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service

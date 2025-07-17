@@ -37,18 +37,16 @@ public class PlanService implements IPlanService {
         Plan plan = planRepository.save(planMapper.toModel(planRequestDto));
 
 
-
         if (plan.getBasePlanId() != null && !plan.getBasePlanId().isEmpty()) {
+
+            if(!planRepository.existsById(plan.getBasePlanId())) {
+
+                throw new NotFoundException("BasePlan not found ");
+            }
+
             inheritPlan(plan.getId(), plan.getBasePlanId());
             plan = planRepository.findById(plan.getId()).orElseThrow(() -> new NotFoundException("Plan not found after inheritance"));
         }
-
-        if(!planRepository.existsById(plan.getBasePlanId())) {
-
-            throw new NotFoundException("BasePlan not found ");
-        }
-
-        
 
 
         return planMapper.toDto(plan);
