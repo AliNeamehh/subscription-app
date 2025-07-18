@@ -13,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class TagService implements ITagService {
@@ -47,5 +49,14 @@ public class TagService implements ITagService {
 
     public void deleteTag(String id) {
         tagRepository.deleteById(id);
+    }
+
+
+    public void validateTag(List<String> tagIds) {
+        for (String tagId : tagIds) {
+            tagRepository.findById(tagId).orElseThrow(() ->
+                    new NotFoundException("Tag is not found with this id: " + tagId));
+        }
+
     }
 }

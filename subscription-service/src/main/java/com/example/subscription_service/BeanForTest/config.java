@@ -1,6 +1,7 @@
 package com.example.subscription_service.BeanForTest;
 
 
+import com.example.subscription_service.model.Tenant;
 import com.example.subscription_service.model.User;
 import com.example.subscription_service.model.enums.UserRole;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,13 @@ public class config {
         return new User("u123", "tenant_abc", "test@example.com", "Test User", UserRole.ADMIN);
 
     }
+
+    @Bean
+    public Tenant testTenant() {
+
+        return new Tenant("u12345","tenant1","tenant@gmail.com");
+    }
+
 
 
 }

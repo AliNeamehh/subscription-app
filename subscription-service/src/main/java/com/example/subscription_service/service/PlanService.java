@@ -6,6 +6,7 @@ import com.example.subscription_service.exception.NotFoundException;
 import com.example.subscription_service.mapper.PlanMapper;
 import com.example.subscription_service.model.Plan;
 import com.example.subscription_service.repository.PlanRepository;
+import com.example.subscription_service.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,9 +22,12 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class PlanService implements IPlanService {
 
+    private final ITagService tagService;
+
     private final PlanRepository planRepository;
 
     private final PlanMapper planMapper;
+    private final TagRepository tagRepository;
 
 
     public Page<PlanResponseDto> getPlans(Pageable pageable) {
@@ -34,16 +38,15 @@ public class PlanService implements IPlanService {
 
 
     public PlanResponseDto createPlan(PlanRequestDto planRequestDto) {
-        Plan plan = planRepository.save(planMapper.toModel(planRequestDto));
 
-        if (plan.getBasePlanId() != null && !plan.getBasePlanId().isEmpty()) {
+        tagService.validateTag(planRequestDto.getTagIds());
 
-            if (!planRepository.existsById(plan.getBasePlanId())) {
+        if (planRequestDto.getBasePlanId() != null && !planRequestDto.getBasePlanId().isEmpty()) {
+            if (!planRepository.existsById(planRequestDto.getBasePlanId())) {
                 throw new NotFoundException("BasePlan not found ");
             }
-            inheritPlan(plan.getId(), plan.getBasePlanId());
-            plan = planRepository.findById(plan.getId()).orElseThrow(() -> new NotFoundException("Plan not found after inheritance"));
         }
+        Plan plan = planRepository.save(planMapper.toModel(planRequestDto));
         return planMapper.toDto(plan);
     }
 
@@ -75,13 +78,16 @@ public class PlanService implements IPlanService {
 
     public PlanResponseDto updatePlan(String planId, PlanRequestDto planRequestDto) {
 
+        Plan plan = planRepository.findById(planId).orElseThrow(() -> new NotFoundException("Plan not found"));
+
+        tagService.validateTag(planRequestDto.getTagIds());
+
         if (planRequestDto.getBasePlanId() != null && !planRequestDto.getBasePlanId().isEmpty()) {
             if (!planRepository.existsById(planRequestDto.getBasePlanId())) {
                 throw new NotFoundException("BasePlan not found ");
             }
         }
 
-        Plan plan = planRepository.findById(planId).orElseThrow(() -> new NotFoundException("Plan not found"));
         Plan updatedPlan = planMapper.toModel(planRequestDto);
         updatedPlan.setId(planId);
         planRepository.save(updatedPlan);

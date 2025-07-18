@@ -26,15 +26,15 @@ public class SubscriptionService implements ISubscriptionService {
 
     public SubscribeResponseDto subscribeTenantTOPlan(SubscribeRequestDto subscribeRequestDto) {
 
-        Optional<Tenant> optionalTenant = tenantRepository.findById(subscribeRequestDto.getTenantId());
-        Optional<Plan> optionalPlan = planRepository.findById(subscribeRequestDto.getPlanId());
-
-        if (optionalTenant.isEmpty()) {
-            throw new NotFoundException("Tenant is Not Found");
-        }
-        if (optionalPlan.isEmpty()) {
-            throw new NotFoundException("Plan is Not Found");
-        }
+//        Optional<Tenant> optionalTenant = tenantRepository.findById(subscribeRequestDto.getTenantId());
+//        Optional<Plan> optionalPlan = planRepository.findById(subscribeRequestDto.getPlanId());
+//
+//        if (optionalTenant.isEmpty()) {
+//            throw new NotFoundException("Tenant is Not Found");
+//        }
+//        if (optionalPlan.isEmpty()) {
+//            throw new NotFoundException("Plan is Not Found");
+//        }
         Subscription subscription = subscriptionRepository.save(subscriptionMapper.toModel(subscribeRequestDto));
         return subscriptionMapper.toResponseDto(subscription);
 

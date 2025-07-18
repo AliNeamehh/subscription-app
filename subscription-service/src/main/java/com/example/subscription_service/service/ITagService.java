@@ -13,4 +13,5 @@ public interface ITagService {
     TagResponseDto createTag(TagRequestDto tagRequestDto);
     TagResponseDto updateTag(String Id, TagRequestDto tagRequestDto);
     void deleteTag(String id);
+    void validateTag(List<String> tagIds);
 }

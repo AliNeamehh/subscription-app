@@ -1,5 +1,6 @@
 package com.example.subscription_service.dto;
 
+import com.example.subscription_service.model.enums.BillingCycle;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -20,8 +21,8 @@ public class PlanRequestDto {
     @DecimalMin("0.0")
     private double price;
 
-    @NotNull
-    private String billingCycle;
+
+    private BillingCycle billingCycle;
     @NotNull
     private int trialDays;
 

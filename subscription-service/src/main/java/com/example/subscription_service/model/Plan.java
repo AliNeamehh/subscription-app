@@ -1,6 +1,7 @@
 package com.example.subscription_service.model;
 
 
+import com.example.subscription_service.model.enums.BillingCycle;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,8 +29,7 @@ public class Plan extends Auditable {
     @NotNull
     private double price;
 
-    @NotNull
-    private String billingCycle;
+    private BillingCycle billingCycle;
     @NotNull
     private int trialDays;
 
