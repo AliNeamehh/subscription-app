@@ -13,7 +13,7 @@ public interface IPlanService {
 
     PlanResponseDto createPlan(PlanRequestDto planRequestDto);
 
-    void inheritPlan(String basePlanId, String inheritedPlanId);
+  ;
 
     PlanResponseDto updatePlan(String planId, PlanRequestDto planRequestDto);
 

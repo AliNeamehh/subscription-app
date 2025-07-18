@@ -14,4 +14,5 @@ public interface ITagService {
     TagResponseDto updateTag(String Id, TagRequestDto tagRequestDto);
     void deleteTag(String id);
     void validateTag(List<String> tagIds);
+    List<String> getMergedTagIds(String basePlanId, String inheritedPlanId);
 }

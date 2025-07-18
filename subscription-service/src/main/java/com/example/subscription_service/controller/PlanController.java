@@ -55,11 +55,7 @@ public class PlanController {
 
 
 
-    @PutMapping("/{planId}/inherit-from/{basePlanId}")
-    public ResponseEntity<Void> inheritFromBase(@PathVariable String planId, @PathVariable String basePlanId) {
-        planService.inheritPlan(planId, basePlanId);
-        return ResponseEntity.noContent().build();
-    }
+
 
 
 }

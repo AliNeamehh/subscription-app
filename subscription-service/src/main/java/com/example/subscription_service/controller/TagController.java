@@ -1,4 +1,5 @@
 package com.example.subscription_service.controller;
+
 import com.example.subscription_service.dto.TagRequestDto;
 import com.example.subscription_service.dto.TagResponseDto;
 import com.example.subscription_service.service.ITagService;
@@ -7,7 +8,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -25,12 +25,10 @@ public class TagController {
 
     @GetMapping
     @Operation(summary = "Get all tags")
-    public ResponseEntity<Page<TagResponseDto>> getTags( @RequestParam(defaultValue = "0") int page,
-                                                         @RequestParam(defaultValue = "10") int size  ) {
+    public ResponseEntity<Page<TagResponseDto>> getTags(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
         Page<TagResponseDto> tagPage = iTagService.getTags(PageRequest.of(page, size));
         return ResponseEntity.ok(tagPage);
     }
-
 
 
     @PostMapping
@@ -50,6 +48,12 @@ public class TagController {
         TagResponseDto updatedTag = iTagService.updateTag(id, tagRequestDto);
         return ResponseEntity.ok().body(updatedTag);
 
+    }
+
+    @PutMapping("/{planId}/inherit-from/{basePlanId}")
+    public ResponseEntity<List<String>> inheritFromBase(@PathVariable String planId, @PathVariable String basePlanId) {
+        List<String> mergedTags = iTagService.getMergedTagIds(planId, basePlanId);
+        return ResponseEntity.ok().body(mergedTags);
     }
 
     @DeleteMapping("/{id}")

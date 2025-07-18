@@ -12,10 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 
 @Service
@@ -51,30 +48,7 @@ public class PlanService implements IPlanService {
     }
 
 
-    public void inheritPlan(String basePlanId, String inheritedPlanId) {
 
-        Optional<Plan> optionalBasePlan = planRepository.findById(basePlanId);
-        Optional<Plan> optionalInheritPlan = planRepository.findById(inheritedPlanId);
-
-        if (optionalBasePlan.isEmpty()) {
-            throw new NotFoundException("Base plan not found");
-        }
-
-        if (optionalInheritPlan.isEmpty()) {
-            throw new NotFoundException("Inherited plan not found");
-        }
-
-
-        Plan basePlan = optionalBasePlan.get();
-        Plan inheritedPlan = optionalInheritPlan.get();
-
-        Set<String> mergedTagIds = new HashSet<>(basePlan.getTagIds());
-        mergedTagIds.addAll(inheritedPlan.getTagIds());
-
-        basePlan.setTagIds(new ArrayList<>(mergedTagIds));
-
-        planRepository.save(basePlan);
-    }
 
     public PlanResponseDto updatePlan(String planId, PlanRequestDto planRequestDto) {
 
