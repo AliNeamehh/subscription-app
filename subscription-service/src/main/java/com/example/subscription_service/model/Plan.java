@@ -33,8 +33,6 @@ public class Plan extends Auditable {
     @NotNull
     private int trialDays;
 
-
-    @NotNull
     private String basePlanId;
 
     private List<String> tagIds;

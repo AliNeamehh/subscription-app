@@ -25,8 +25,6 @@ public class PlanRequestDto {
     @NotNull
     private int trialDays;
 
-
-    @NotNull
     private String basePlanId;
 
     private List<String> tagIds;
