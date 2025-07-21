@@ -1,5 +1,4 @@
 package com.example.subscription_service.controller;
-
 import com.example.subscription_service.dto.TagRequestDto;
 import com.example.subscription_service.dto.TagResponseDto;
 import com.example.subscription_service.service.ITagService;
@@ -12,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
