@@ -48,10 +48,7 @@ public class SubscriptionService implements ISubscriptionService {
                 plan.getPrice(),
                 sub.getEndDate());
 
-        restTemplate.postForEntity("", invoiceRequest, Void.class);
-
-
-
+        restTemplate.postForEntity("http://localhost:8081/invoices", invoiceRequest, Void.class);
 
     }
 
