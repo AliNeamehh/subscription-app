@@ -13,7 +13,7 @@ public interface IPlanService {
 
     PlanResponseDto createPlan(PlanRequestDto planRequestDto);
 
-  ;
+    PlanResponseDto getPlanById(String planId);
 
     PlanResponseDto updatePlan(String planId, PlanRequestDto planRequestDto);
 

@@ -32,6 +32,10 @@ public class PlanService implements IPlanService {
         return tagPage.map(planMapper::toDto);
 
     }
+    public PlanResponseDto getPlanById(String planId){
+        Plan plan=planRepository.findById(planId).orElseThrow(()->new NotFoundException("Plan not found with this Id: "+planId));
+        return planMapper.toDto(plan);
+    }
 
 
     public PlanResponseDto createPlan(PlanRequestDto planRequestDto) {
