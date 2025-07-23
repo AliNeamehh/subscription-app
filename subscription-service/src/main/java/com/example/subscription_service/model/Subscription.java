@@ -3,6 +3,7 @@ package com.example.subscription_service.model;
 import com.example.subscription_service.model.enums.SubscriptionStatus;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -15,6 +16,7 @@ import java.time.Instant;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Subscription extends Auditable {
 
     @Id
