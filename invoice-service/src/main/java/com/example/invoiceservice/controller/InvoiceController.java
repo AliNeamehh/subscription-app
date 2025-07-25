@@ -4,6 +4,7 @@ package com.example.invoiceservice.controller;
 import com.example.invoiceservice.dto.InvoiceRequest;
 import com.example.invoiceservice.service.IInvoiceService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +21,7 @@ public class InvoiceController {
     @PostMapping
     public ResponseEntity<Void> createInvoice(@RequestBody InvoiceRequest invoiceRequest){
         invoiceService.createInvoice(invoiceRequest);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
 
     }
 
