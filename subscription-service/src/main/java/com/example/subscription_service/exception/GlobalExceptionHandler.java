@@ -15,7 +15,7 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<Map<String, String>> handleEmailAlreadyExists(NotFoundException ex) {
+    public ResponseEntity<Map<String, String>> handleNotfoundException(NotFoundException ex) {
         log.warn("Not Found Exception" ,ex.getMessage());
         Map<String, String> error = new HashMap<>();
         error.put("error", ex.getMessage());

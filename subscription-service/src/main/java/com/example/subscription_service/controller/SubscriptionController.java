@@ -40,7 +40,7 @@ public class SubscriptionController {
 
     }
 
-   @PostMapping("import-csv")
+   @PostMapping("/import-csv")
     public ResponseEntity<Void> importCsv(@RequestParam("file") MultipartFile file) throws Exception {
         File temp =File.createTempFile("subscription",".csv");
         file.transferTo(temp);

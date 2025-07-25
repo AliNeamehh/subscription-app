@@ -77,6 +77,12 @@ public class SubscriptionService implements ISubscriptionService {
         return subscriptionRepository.findByStatus(SubscriptionStatus.INACTIVE, pageable);
     }
 
+    public Page<Subscription> getCancelledSubscriptionsPaged(Pageable pageable) {
+
+        return subscriptionRepository.findByStatus(SubscriptionStatus.CANCELLED, pageable);
+    }
+
+
 
     public void insertFromCsv(File file) throws Exception {
 
@@ -98,7 +104,7 @@ public class SubscriptionService implements ISubscriptionService {
                 // split the readed line into array of strings
                 String[] fields = line.split(",");
 
-                Subscription subscription = Subscription.builder().id(fields[0]).tenantId(fields[1]).planId(fields[2]).startDate(Instant.parse(fields[3])).endDate(Instant.parse(fields[4])).status(SubscriptionStatus.valueOf(fields[5])).isAutoRenew(Boolean.parseBoolean(fields[6])).build();
+                Subscription subscription = Subscription.builder().tenantId(fields[1]).planId(fields[2]).startDate(Instant.parse(fields[3])).endDate(Instant.parse(fields[4])).status(SubscriptionStatus.valueOf(fields[5])).isAutoRenew(Boolean.parseBoolean(fields[6])).build();
 
                 subscriptions.add(subscription);
 
@@ -110,7 +116,7 @@ public class SubscriptionService implements ISubscriptionService {
 
             //  chunk and submit
 
-            int chunkSize = 50;
+            int chunkSize = 10;
 
             for (int i = 0; i < subscriptions.size(); i += chunkSize) {
 
@@ -122,6 +128,11 @@ public class SubscriptionService implements ISubscriptionService {
 
 
                     System.out.println("inserting chunck from start :" + start + " end:" + end + "by" + Thread.currentThread().getName());
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                     subscriptionRepository.saveAll(chunk);
 
                 });
