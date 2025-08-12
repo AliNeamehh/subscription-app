@@ -12,6 +12,3 @@ A Spring Boot application for managing subscriptions. Includes scheduled tasks f
 - Spring Boot
 - Maven
 
-## Getting Started
-
-1. Clone the repository:
