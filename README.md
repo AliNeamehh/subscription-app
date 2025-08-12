@@ -1,14 +1,22 @@
-# Subscription Service Application
+## Subscription App
 
-A Spring Boot application for managing subscriptions. Includes scheduled tasks for automated operations.
+A SaaS subscription management platform developed using **Java**, **Spring Boot**, and **MongoDB**.  
+The application is designed with a **microservices architecture**, featuring:
 
-## Features
-- Manage user subscriptions
-- Scheduled jobs using Spring Scheduling
-- RESTful API endpoints
+- **Subscription Service** – Handles user plans, features, and subscription lifecycle.
+- **Invoice Service** – Generates and manages recurring invoices.
+- **RESTful APIs** – For communication between services and integration with external systems.
 
-## Technologies
-- Java
+### Tech Stack
+- Java 17
 - Spring Boot
+- MongoDB
 - Maven
+- REST API
+- Microservices Architecture
 
+### Features
+- Create and manage subscription plans
+- Track subscription status and billing cycles
+- Generate and retrieve invoices via API
+- Modular microservices for scalability
