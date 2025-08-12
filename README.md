@@ -8,7 +8,7 @@ The application is designed with a **microservices architecture**, featuring:
 - **RESTful APIs** – For communication between services and integration with external systems.
 
 ### Tech Stack
-- Java 17
+- Java 21
 - Spring Boot
 - MongoDB
 - Maven
